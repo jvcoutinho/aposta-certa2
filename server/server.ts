@@ -20,20 +20,21 @@ let fabricaApostas = new fabricaDeApostas();
 var options = getCrawler('https://www.gazetaesportiva.com/loteca/#futebol');
 var apostas: any;
 
+request(options)
+    .then($ => apostas = fabricaApostas.crawlConcurso($))
+    .catch(e => console.log(e));
+
 app.get('/', function (req, res) {
     res.send(apostadores)
 })
 
 app.get('/apostas', function(req, res) {
-    request(options)
-    .then($ => apostas = fabricaApostas.crawlConcurso($))
-    .catch(e => console.log(e));
     res.send(JSON.stringify(apostas));       
 });
 
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port 3000!')
 })
 
 function getCrawler(url: String) {

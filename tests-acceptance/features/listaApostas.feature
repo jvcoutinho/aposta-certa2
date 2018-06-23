@@ -5,14 +5,15 @@ so that I can see what I can bet.
 
 Scenario: ordenar crescentemente a lista por data dos jogos
 Given I'm at "Concurso" page
-Given "BRASIL" versus "SUÍÇA" is on the list of bets
-Given "BRASIL" versus "SUÍÇA" will happen "DOMINGO"
-Given "PORTUGAL" versus "ESPANHA" is on the list of bets 
-Given "PORTUGAL" versus "ESPANHA" will happen "SEXTA-FEIRA"
+Given "BRASIL" versus "COSTA RICA" is on the list of bets
+Given "BRASIL" versus "COSTA RICA" will happen "SEXTA-FEIRA"
+Given "BÉLGICA" versus "TUNÍSIA" is on the list of bets 
+Given "BÉLGICA" versus "TUNÍSIA" will happen "SÁBADO"
 When I sort the list by date
-Then I see "PORTUGAL" versus "ESPANHA" before "BRASIL" versus "SUÍÇA" on the list
+Then I see "BRASIL" versus "COSTA RICA" before "BÉLGICA" versus "TUNÍSIA" on the list
 
-Scenario: alerta de acúmulo de aposta	
-Given The prize has accumulated for more than "R$ 1.000.000"
-When I go to "Concurso" page
-Then I see an "Acumulated!" alert
+Scenario: alerta de acúmulo de aposta
+Given I'm at "Concurso" page	
+Given The prize has accumulated for more than R$ "1000000"
+When I see the estimated prize section
+Then I see an "ACUMULADO!" alert
