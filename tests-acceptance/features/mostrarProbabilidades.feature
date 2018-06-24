@@ -4,9 +4,9 @@ I want to see the win probabilities of the teams facing each other in a game
 So that I can choose a proper option to bet
 
 Scenario: Visualizando as probabilidades em um jogo
-Given I am at "system.site"
-Given “Corinthians” has “55%” win probability calculated
-Given “Flamengo” has “45%” win probability calculated
+Given I'm at "Concurso" page
+Given "Corinthians" has "55%" win probability calculated
+Given "Flamengo" has "45%" win probability calculated
 When I request the field "Corinthians" vs "Flamengo" 
 Then I can see "55%" attached to "Corinthians"
 Then I can see "45%" attached to "Flamengo"
