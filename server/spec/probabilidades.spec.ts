@@ -17,7 +17,7 @@ describe('The list of probabilities', () => {
     it('should have 14 games', () => {
         return request(options)
             .then($ => {
-                let probabilidadess = crawler.crawlProbabilidades($);
+                let probabilidades = crawler.crawlProbabilidades($);
                 expect(probabilidades.length).toBe(14);
             })
             .catch(e => {
@@ -31,9 +31,14 @@ describe('The list of probabilities', () => {
                 let probabilidades = crawler.crawlProbabilidades($);
                 let vitoriaMandante, vitoriaVisitante, empate;
                 for(let i = 0; i < probabilidades.length; i++) {
-                    expect(probabilidades[i].vitoriaMandante).toMatch(/[\d]*%/);
-                    expect(probabilidades[i].vitoriaVisitante).toMatch(/[\d]*%/);
-                    expect(probabilidades[i].empate).toMatch(/[\d]*%/);
+                    vitoriaMandante = probabilidades[i].vitoriaMandante;
+                    vitoriaVisitante = probabilidades[i].vitoriaVisitante;
+                    empate = probabilidades[i].empate;
+                    
+                    expect(vitoriaMandante).toMatch(/[\d]*%/);
+                    expect(vitoriaVisitante).toMatch(/[\d]*%/);
+                    expect(empate).toMatch(/[\d]*%/);
+                    expect(Number(vitoriaMandante.split('%')[0]) + Number(vitoriaVisitante.split('%')[0]) + Number(empate.split('%')[0])).not.toBeGreaterThan(101);
                 }
             })
             .catch(e => {

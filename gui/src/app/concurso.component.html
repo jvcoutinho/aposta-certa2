@@ -1,17 +1,26 @@
 <nav>
     <button (click)="sortList()">Data</button>    
 </nav>
-<table>
+<table id="concurso">
     <tr *ngFor="let a of apostas">
-        <td class="mandante">
-            {{a.mandante.toUpperCase()}}
-        </td>
-        <td class="visitante">
-            {{a.visitante.toUpperCase()}}
-        </td>
-        <td class="data">
-            {{a.data.toUpperCase()}}
-        </td>
+        <table>
+            <tr (click)="intercalate()">
+                <td class="mandante">
+                    {{a.mandante.toUpperCase()}}
+                </td>
+                <td class="visitante">
+                    {{a.visitante.toUpperCase()}}
+                </td>
+                <td class="data">
+                    {{a.data.toUpperCase()}}
+                </td>
+            </tr>
+            <tr class="probabilidades">
+                <td name="probabilidadeMandante"></td>
+                <td name="probabilidadeEmpate"></td>
+                <td name="probabilidadeVisitante"></td>
+            </tr>
+        </table>        
     </tr>
 </table>
 

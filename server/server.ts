@@ -21,6 +21,8 @@ var apostas: any;
 getApostas(getCrawler('https://www.gazetaesportiva.com/loteca/#futebol'));
 var acumulo: any;
 getAcumulo(getCrawler('https://g1.globo.com/loterias/loteca.ghtml'));
+var probabilidades: any;
+getProbabilidades(getCrawler('http://romers.com.br/'));
 
 app.get('/', function (req, res) {
     res.send(apostadores)
@@ -33,6 +35,10 @@ app.get('/apostas', function(req, res) {
 app.get('/acumulo', function(req, res) {
     res.send(acumulo);
 });
+
+app.get('/probabilidades', function(req, res) {
+    res.send(JSON.stringify(probabilidades));
+})
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
@@ -56,6 +62,12 @@ function getApostas(options) {
 function getAcumulo(options) {
     request(options)
     .then($ => acumulo = fabricaApostas.crawlAcumulo($))
+    .catch(e => console.log(e));
+}
+
+function getProbabilidades(options) {
+    request(options)
+    .then($ => probabilidades = fabricaApostas.crawlProbabilidades($))
     .catch(e => console.log(e));
 }
 

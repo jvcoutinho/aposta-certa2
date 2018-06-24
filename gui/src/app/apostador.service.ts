@@ -24,4 +24,11 @@ export class ApostadorService {
         .then(res => res.text())
         .catch(e => console.log('Erro de acesso: ' + e));
     }
+
+    getProbabilidades(): any {
+        return this.http.get(this.acURL + "/probabilidades")
+        .toPromise()
+        .then(res => res.json() as Probabilidade[])
+        .catch(e => console.log('Erro de acesso: ' + e));
+    }
 }

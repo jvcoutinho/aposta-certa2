@@ -13,11 +13,15 @@ export class ConcursoComponent implements OnInit {
       this.apostas = [];
       this.accumulated = "ACUMULOU!";
       this.prize = "";
+      this.probabilidades = [];
+      this.concurso = [];
   }
 
   public apostas: Aposta[];
   public accumulated: String;
   public prize: String;
+  public probabilidades: Probabilidade[];
+  public concurso: any[];
 
   sortList(): void {
     this.apostas.sort(this.compare);
@@ -36,6 +40,10 @@ export class ConcursoComponent implements OnInit {
     this.apostasService.getAcumulo()
     .then(prize => {  this.prize = prize; this.setAccumulated(); })
     .catch(e => console.log('Erro: ' + e));
+
+    this.apostasService.getProbabilidades()
+    .then(probabilidades => { this.probabilidades = probabilidades; this.intercalate(); })
+    .catch(e => console.log('Erro: ' + e));
   }
 
   private setAccumulated() {
@@ -44,6 +52,29 @@ export class ConcursoComponent implements OnInit {
     else
       this.accumulated = '';
   }
+
+  private intercalate() {
+
+    let apostas = document.querySelectorAll('.mandante');
+    let probabilidades = document.querySelectorAll('.probabilidades');
+    for(let i = 0; i < apostas.length; i++) {
+      let probabilidadesText = probabilidades[i].querySelectorAll("td");
+      probabilidadesText[0].textContent = 'V: ' + this.probabilidades[i].vitoriaMandante;
+      probabilidadesText[1].textContent = 'E: ' + this.probabilidades[i].empate;
+      probabilidadesText[2].textContent = 'V: ' + this.probabilidades[i].vitoriaVisitante;
+
+      apostas[i].addEventListener('click', e => {
+        probabilidades[i].setAttribute('style', 'visibility: visible');
+      });
+    }
+  }
+  
+  showProbabilidades(tr: HTMLTableRowElement): void {
+    console.log(tr);
+    var probabilidades = tr.getElementsByTagName("td");
+    for(let i = 0; i < probabilidades.length; i++)
+      probabilidades[i].style.display = "table-cell";
+  } 
 
 }
 
@@ -54,3 +85,4 @@ function findIndex(array: any[], element: any): number {
     }
   }
 }
+
