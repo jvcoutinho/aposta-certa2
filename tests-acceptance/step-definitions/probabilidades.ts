@@ -5,7 +5,7 @@ let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
 var indexTime = -1;
-var mandante = false;
+var mandante = true;
 
 defineSupportCode(function ({ Given, When, Then }) {
 
@@ -22,16 +22,6 @@ defineSupportCode(function ({ Given, When, Then }) {
             if(text === time) 
                 indexTime = index; 
             }));
-
-        let winProbability;
-        let probabilities: ElementArrayFinder;
-        if(mandante === true) 
-            probabilities = element.all(by.className('probabilidadeMandante'));
-        else 
-            probabilities = element.all(by.className('probabilidadeVisitante'));
-
-        await probabilities.get(indexTime).getText().then(text => winProbability = text);
-        await expect(Promise.resolve(winProbability)).to.eventually.equal(probabilidade);
     });
 
     When(/^I request the field "([^\"]*)" vs "([^\"]*)"$/, async(mandante, visitante) => {
@@ -44,11 +34,15 @@ defineSupportCode(function ({ Given, When, Then }) {
     Then(/^I can see "([^\"]*)" attached to "([^\"]*)"$/, async(probabilidade, time) => {
         let winProbability;
         let probabilities: ElementArrayFinder;
-        if(mandante === true) 
-            probabilities = element.all(by.className('probabilidadeMandante'));
+        if(mandante === true) {
+            probabilities = element.all(by.name('probabilidadeMandante'));
+            mandante = false;
+        }
         else 
-            probabilities = element.all(by.className('probabilidadeVisitante'));
-        await expect(probabilities.get(indexTime).getCssValue('display')).to.not.equal('none');
+            probabilities = element.all(by.name('probabilidadeVisitante'));
+
+        await probabilities.get(indexTime).getText().then(text => winProbability = text.substr(3));
+        await expect(Promise.resolve(winProbability)).to.eventually.equal(probabilidade);
     });
 
 });

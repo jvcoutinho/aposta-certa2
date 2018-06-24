@@ -26,4 +26,21 @@ export class fabricaDeApostas {
         return valorAcumulado[1].children[3].children[1].children[3].children[0].data.substr(4);
     }
 
+    crawlProbabilidades($): any[] {
+        let probabilidades: any[] = [];
+        let jogos = $("tr");
+
+        for(let i = 1; i <= 14; i++) {
+            probabilidades.push({
+                mandante: jogos[i].children[5].children[0].data,
+                visitante: jogos[i].children[9].children[0].data,
+                vitoriaMandante: jogos[i].children[3].children[0].data,
+                vitoriaVisitante: jogos[i].children[11].children[0].data,
+                empate: jogos[i].children[7].children[0].data
+            })
+        }
+        
+        return probabilidades;
+    }
+
 }
