@@ -17,18 +17,10 @@ app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
 let fabricaApostas = new fabricaDeApostas();
-var options1 = getCrawler('https://www.gazetaesportiva.com/loteca/#futebol');
-var options2 = getCrawler('https://g1.globo.com/loterias/loteca.ghtml');
 var apostas: any;
-var acumulo;
-
-request(options1)
-    .then($ => apostas = fabricaApostas.crawlConcurso($))
-    .catch(e => console.log(e));
-
-request(options2)
-    .then($ => acumulo = fabricaApostas.crawlAcumulo($))
-    .catch(e => console.log(e));
+getApostas(getCrawler('https://www.gazetaesportiva.com/loteca/#futebol'));
+var acumulo: any;
+getAcumulo(getCrawler('https://g1.globo.com/loterias/loteca.ghtml'));
 
 app.get('/', function (req, res) {
     res.send(apostadores)
@@ -42,7 +34,6 @@ app.get('/acumulo', function(req, res) {
     res.send(acumulo);
 });
 
-
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
 })
@@ -54,6 +45,18 @@ function getCrawler(url: String) {
             return cheerio.load(body);
         }
     };
+}
+
+function getApostas(options) {
+    request(options)
+    .then($ => apostas = fabricaApostas.crawlConcurso($))
+    .catch(e => console.log(e));
+}
+
+function getAcumulo(options) {
+    request(options)
+    .then($ => acumulo = fabricaApostas.crawlAcumulo($))
+    .catch(e => console.log(e));
 }
 
 

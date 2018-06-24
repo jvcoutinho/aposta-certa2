@@ -11,7 +11,7 @@ export class ConcursoComponent implements OnInit {
 
   public constructor(private apostasService: ApostadorService) {
       this.apostas = [];
-      this.accumulated = "ACUMULOU";
+      this.accumulated = "ACUMULOU!";
       this.prize = "";
   }
 
@@ -30,17 +30,19 @@ export class ConcursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.apostasService.getApostas()
-    .then(apostas => {console.log('Apostas', apostas); this.apostas = apostas})
-    .catch(e => console.log('Erro: ' + e));
-    this.apostasService.getAcumulo()
-    .then(prize => {console.log('Acúmulo', prize); this.prize = prize; 
-      if(this.prize.length >= 12)
-        this.accumulated = 'ACUMULOU!';
-      else
-        this.accumulated = '';})
+    .then(apostas => this.apostas = apostas)
     .catch(e => console.log('Erro: ' + e));
 
-    
+    this.apostasService.getAcumulo()
+    .then(prize => {  this.prize = prize; this.setAccumulated(); })
+    .catch(e => console.log('Erro: ' + e));
+  }
+
+  private setAccumulated() {
+    if(this.prize.length >= 12)
+      this.accumulated = 'ACUMULOU!';
+    else
+      this.accumulated = '';
   }
 
 }
