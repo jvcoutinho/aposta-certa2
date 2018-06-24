@@ -11,9 +11,13 @@ export class ConcursoComponent implements OnInit {
 
   public constructor(private apostasService: ApostadorService) {
       this.apostas = [];
+      this.accumulated = "ACUMULOU";
+      this.prize = "";
   }
 
   public apostas: Aposta[];
+  public accumulated: String;
+  public prize: String;
 
   sortList(): void {
     this.apostas.sort(this.compare);
@@ -28,6 +32,15 @@ export class ConcursoComponent implements OnInit {
     this.apostasService.getApostas()
     .then(apostas => {console.log('Apostas', apostas); this.apostas = apostas})
     .catch(e => console.log('Erro: ' + e));
+    this.apostasService.getAcumulo()
+    .then(prize => {console.log('Acúmulo', prize); this.prize = prize; 
+      if(this.prize.length >= 12)
+        this.accumulated = 'ACUMULOU!';
+      else
+        this.accumulated = '';})
+    .catch(e => console.log('Erro: ' + e));
+
+    
   }
 
 }

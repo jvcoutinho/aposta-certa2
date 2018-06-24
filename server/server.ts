@@ -17,11 +17,17 @@ app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
 let fabricaApostas = new fabricaDeApostas();
-var options = getCrawler('https://www.gazetaesportiva.com/loteca/#futebol');
+var options1 = getCrawler('https://www.gazetaesportiva.com/loteca/#futebol');
+var options2 = getCrawler('https://g1.globo.com/loterias/loteca.ghtml');
 var apostas: any;
+var acumulo;
 
-request(options)
+request(options1)
     .then($ => apostas = fabricaApostas.crawlConcurso($))
+    .catch(e => console.log(e));
+
+request(options2)
+    .then($ => acumulo = fabricaApostas.crawlAcumulo($))
     .catch(e => console.log(e));
 
 app.get('/', function (req, res) {
@@ -30,6 +36,10 @@ app.get('/', function (req, res) {
 
 app.get('/apostas', function(req, res) {
     res.send(JSON.stringify(apostas));       
+});
+
+app.get('/acumulo', function(req, res) {
+    res.send(acumulo);
 });
 
 

@@ -21,4 +21,9 @@ export class fabricaDeApostas {
         return apostas;
     }
 
+    crawlAcumulo($): any {
+        var valorAcumulado = $("table[class='content-lottery__table-content']");
+        return valorAcumulado[1].children[3].children[1].children[3].children[0].data.substr(4);
+    }
+
 }

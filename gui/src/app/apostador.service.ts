@@ -17,4 +17,11 @@ export class ApostadorService {
         .then(res => res.json() as Aposta[])
         .catch(e => console.log('Erro de acesso: ' + e));
     }
+
+    getAcumulo(): any {
+        return this.http.get(this.acURL + "/acumulo")
+        .toPromise()     
+        .then(res => res.text())
+        .catch(e => console.log('Erro de acesso: ' + e));
+    }
 }

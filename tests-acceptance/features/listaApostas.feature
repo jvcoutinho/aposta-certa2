@@ -14,6 +14,6 @@ Then I see "BRASIL" versus "COSTA RICA" before "BÉLGICA" versus "TUNÍSIA" on t
 
 Scenario: alerta de acúmulo de aposta
 Given I'm at "Concurso" page	
-Given The prize has accumulated for more than R$ "1000000"
+Given The prize has not accumulated for more than R$ 1.000.000,00
 When I see the estimated prize section
-Then I see an "ACUMULADO!" alert
+Then I don't see an "ACUMULOU!" alert
