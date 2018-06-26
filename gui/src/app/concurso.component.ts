@@ -54,8 +54,8 @@ export class ConcursoComponent implements OnInit {
   }
 
   private intercalate() {
-
-    let apostas = document.querySelectorAll('.mandante');
+    
+    let apostas = document.getElementsByClassName('apostas');
     let probabilidades = document.querySelectorAll('.probabilidades');
     for(let i = 0; i < apostas.length; i++) {
       let probabilidadesText = probabilidades[i].querySelectorAll("td");
@@ -63,8 +63,15 @@ export class ConcursoComponent implements OnInit {
       probabilidadesText[1].textContent = 'E: ' + this.probabilidades[i].empate;
       probabilidadesText[2].textContent = 'V: ' + this.probabilidades[i].vitoriaVisitante;
 
+      let visibleControl = false;
       apostas[i].addEventListener('click', e => {
-        probabilidades[i].setAttribute('style', 'visibility: visible');
+        if(visibleControl === true) {
+            probabilidades[i].style.visibility = 'collapse';
+            visibleControl = false;
+        } else {
+          probabilidades[i].style.visibility = 'visible';
+          visibleControl = true;
+        }
       });
     }
   }

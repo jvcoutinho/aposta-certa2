@@ -37,15 +37,15 @@ defineSupportCode(function ({ Given, When, Then }) {
         if(mandante === true) {
             probabilities = element.all(by.name('probabilidadeMandante'));
             mandante = false;
-        }
-        else {
+        } else {
             probabilities = element.all(by.name('probabilidadeVisitante'));
             mandante = true;
         }
 
-        await probabilities.get(indexTime[0]).getText().then(text => {console.log(text);winProbability = text.substr(3)});
+        await probabilities.get(indexTime[0]).getText().then(text => winProbability = text.substr(3));
         await expect(Promise.resolve(winProbability)).to.eventually.equal(probabilidade);
     });
+  
     Then(/^I can not see "([^\"]*)" attached to "([^\"]*)"$/, async(probabilidade, time) =>{
         let winProbability;
         let probabilities: ElementArrayFinder;
@@ -58,7 +58,7 @@ defineSupportCode(function ({ Given, When, Then }) {
             mandante = true;
         }
 
-        await probabilities.get(indexTime[0]).getText().then(text => {console.log(text);winProbability = text.substr(3)});
+        await probabilities.get(indexTime[0]).getText().then(text => winProbability = text.substr(3));
         await expect(Promise.resolve(winProbability)).to.not.eventually.equal(probabilidade);
         
     });
