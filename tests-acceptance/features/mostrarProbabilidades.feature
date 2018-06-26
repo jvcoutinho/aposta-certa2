@@ -22,11 +22,14 @@ Then the system calculates the win probability "45%" of  "Flamengo"
 Then attach "45%" to "Flamengo"
 
 Scenario: Probabilidades correspondem ao jogo
-Given I am at "system.site"
-Given I see the “Corinthians” “vs” “Flamengo” field
-Given I see the “Palmeiras” “vs” “Grêmio” field
-When I request the "Corinthians" "vs" "Flamengo" field
-Then I can not see "Palmeiras" "vs" "Grêmio" probabilities
+Given I'm at "Concurso" page
+Given "DINAMARCA" has "49%" win probability calculated
+Given "AUSTRÁLIA" has "17%" win probability calculated
+Given "ARGENTINA" has "69%" win probability calculated
+Given "CROÁCIA" has "20%" win probability calculated
+When I request the field "DINAMARCA" vs "AUSTRÁLIA" 
+Then I can not see "69%" attached to "DINAMARCA"  
+Then I can not see "20%" attached to "AUSTRÁLIA"
 
 Scenario: Cálculo da probabilidade para os times correspondentes
 Given the system has "Corinthians" "vs" "Flamengo" field

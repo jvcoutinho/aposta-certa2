@@ -54,7 +54,7 @@ export class ConcursoComponent implements OnInit {
   }
 
   private intercalate() {
-
+    
     let apostas = document.getElementsByClassName('apostas');
     let probabilidades = document.querySelectorAll('.probabilidades');
     for(let i = 0; i < apostas.length; i++) {
