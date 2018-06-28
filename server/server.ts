@@ -4,6 +4,10 @@ import bodyParser = require("body-parser");
 var cheerio: any = require('cheerio');
 import { fabricaDeApostas } from './fabricaDeApostas';
 var request: any = require('request-promise');
+import { fabricaDePropostas } from './fabricaDePropostas';
+import { Apostador } from '../gui/src/app/apostador';
+import { CadastroDeApostadores } from './cadastroDeApostadores';
+
 
 const apostadores = [{nome:'Alexandre', email:'acm@cin.ufpe.br', senha:'python'}]
 
@@ -17,16 +21,30 @@ app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
 let fabricaApostas = new fabricaDeApostas();
+let fabricaPropostas = new fabricaDePropostas();
+var cadastro: CadastroDeApostadores = new CadastroDeApostadores();
 var apostas: any;
 getApostas(getCrawler('https://www.gazetaesportiva.com/loteca/#futebol'));
 var acumulo: any;
 getAcumulo(getCrawler('https://g1.globo.com/loterias/loteca.ghtml'));
 var probabilidades: any;
 getProbabilidades(getCrawler('http://romers.com.br/'));
+var propostas: any;
+getPropostas(getCrawler('http://romers.com.br/'));
 
-app.get('/', function (req, res) {
-    res.send(apostadores)
-})
+app.get('/apostadores', function (req, res) {
+    res.send(JSON.stringify(cadastro.getApostadores()));
+  });
+
+app.post('/apostador', function (req: express.Request, res: express.Response){
+    var apostador: Apostador = <Apostador> req.body;
+    apostador = cadastro.cadastrar(apostador);
+    if(apostador) {
+        res.send({"success": "O apostador foi cadastrado com sucesso!"});
+    }else{
+        res.send({"failure": "O apostador não pode ser cadastrado!"});
+    }
+});
 
 app.get('/apostas', function(req, res) {
     res.send(JSON.stringify(apostas));       
@@ -38,7 +56,12 @@ app.get('/acumulo', function(req, res) {
 
 app.get('/probabilidades', function(req, res) {
     res.send(JSON.stringify(probabilidades));
-})
+});
+
+app.get('/propostas', function(req, res) {
+    res.send(JSON.stringify(propostas));       
+});
+
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
@@ -68,6 +91,12 @@ function getAcumulo(options) {
 function getProbabilidades(options) {
     request(options)
     .then($ => probabilidades = fabricaApostas.crawlProbabilidades($))
+    .catch(e => console.log(e));
+}
+
+function getPropostas(options){
+    request(options)
+    .then($ => propostas = fabricaPropostas.Propor(fabricaApostas.crawlProbabilidades($)))
     .catch(e => console.log(e));
 }
 

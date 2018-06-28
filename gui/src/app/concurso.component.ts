@@ -28,7 +28,7 @@ export class ConcursoComponent implements OnInit {
   }
 
   private compare = function(a, b): number {
-    let days = ['Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo', 'Segunda-feira', 'Terça-feira'];
+    let days = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
     return findIndex(days, a.data) - findIndex(days, b.data);
   }
 
