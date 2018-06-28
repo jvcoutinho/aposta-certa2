@@ -56,7 +56,7 @@ export class ConcursoComponent implements OnInit {
   private intercalate() {
     
     let apostas = document.getElementsByClassName('apostas');
-    let probabilidades = document.querySelectorAll('.probabilidades');
+    let probabilidades: NodeListOf<HTMLTableCellElement> = document.querySelectorAll('.probabilidades');
     for(let i = 0; i < apostas.length; i++) {
       let probabilidadesText = probabilidades[i].querySelectorAll("td");
       probabilidadesText[0].textContent = 'V: ' + this.probabilidades[i].vitoriaMandante;
